@@ -37,41 +37,41 @@ def navigation():
     while True:
         MobileX = hedge.position()[1]
         MobileY = hedge.position()[2]
-        if RPL.analogRead(1) > 500:  # front left
-            RPL.pwmWrite(ServoR, 1250, 3000)
-            RPL.pwmWrite(ServoL, 1000, 3000)
+        if RPL.analogRead(1) > 200:  # front left
+            RPL.servoWrite(0, 1450)
+            RPL.servoWrite(1, 2000)
             print "1"
-        elif RPL.analogRead(2) > 500:  # front right
-            RPL.pwmWrite(ServoR, 2000, 3000)
-            RPL.pwmWrite(ServoL, 1750, 3000)
+        elif RPL.analogRead(2) > 200:  # front right
+            RPL.servoWrite(0, 1000)
+            RPL.servoWrite(1, 1550)
             print "2"
-        elif RPL.analogRead(3) > 500:   # left side
-            RPL.pwmWrite(ServoR, 1550, 3000)
-            RPL.pwmWrite(ServoL, 1000, 3000)
+        elif RPL.analogRead(3) > 200:   # left side
+            RPL.servoWrite(0, 1450)
+            RPL.servoWrite(1, 2000)
             print "3"
-        elif RPL.analogRead(4) > 500:   # right side
-            RPL.pwmWrite(ServoR, 2000, 3000)
-            RPL.pwmWrite(ServoL, 1450, 3000)
+        elif RPL.analogRead(4) > 200:   # right side
+            RPL.servoWrite(0, 1000)
+            RPL.servoWrite(1, 1550)
             print "4"
         elif 0 > MobileX and 0 > MobileY:
-            RPL.pwmWrite(ServoR, 1750, 3000)  # drive straight
-            RPL.pwmWrite(ServoL, 1250, 3000)
+            RPL.servoWrite(0, 1000)  # drive straight
+            RPL.servoWrite(1, 2000)
             print "a"
         elif MobileX < 0 and MobileY > 0:
-            RPL.pwmWrite(ServoR, 1550, 3000)  # turn right
-            RPL.pwmWrite(ServoL, 1250, 3000)
+            RPL.servoWrite(0, 1450)  # turn right
+            RPL.servoWrite(1, 2000)
             print "b"
         elif MobileX > 0 and MobileY < 0:
-            RPL.pwmWrite(ServoR, 1750, 3000)   # turn left
-            RPL.pwmWrite(ServoR, 1450, 3000)
+            RPL.servoWrite(0, 1000)    # turn left
+            RPL.servoWrite(1, 1550)
             print "c"
         elif MobileX == 0 and MobileY == 0:
-            RPL.pwmWrite(ServoR, 1500, 3000)         # stop
-            RPL.pwmWrite(ServoL, 1500, 3000)
+            RPL.servoWrite(0, 0)         # stop
+            RPL.servoWrite(0, 0)
             print "d"
         elif MobileX > 0 and MobileY > 0:
-            RPL.pwmWrite(ServoR, 1450, 3000)    # backwards
-            RPL.pwmWrite(ServoR, 1550, 3000)
+            RPL.servoWrite(0, 1600)    # backwards
+            RPL.servoWrite(1, 1400)
            print "e"
         print MobileX
         print MobileY
