@@ -5,6 +5,7 @@ from marvelmind import MarvelmindHedge
 from time import sleep
 import sys
 
+sensor_pin = 5
 RPL.pinMode(sensor_pin,RPL.INPUT)
 def analogRead(pin):
   putPacket(ANREAD, bytearray([5]), 1)
@@ -72,7 +73,7 @@ def navigation():
         elif MobileX > 0 and MobileY > 0:
             RPL.servoWrite(0, 1600)    # backwards
             RPL.servoWrite(1, 1400)
-           print "e"
+            print "e"
         print MobileX
         print MobileY
         hedge.print_position()
