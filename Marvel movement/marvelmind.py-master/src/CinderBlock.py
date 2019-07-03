@@ -1,6 +1,6 @@
-import setup
-from setup import RPL
-import RoboPiLib as RPL
+from bsmLib import RPL
+RPL.init()
+
 sensor_pin = 5
 RPL.pinMode(sensor_pin,RPL.INPUT)
 def analogRead(pin):
