@@ -66,11 +66,11 @@ def navigation():
             RPL.servoWrite(0, 1000)    # turn left
             RPL.servoWrite(1, 1550)
             print "c"
-        elif MobileX == 0 and MobileY == 0:
+        elif 1 > MobileX > -1 and 1 > MobileY > -1:
             RPL.servoWrite(0, 0)         # stop
             RPL.servoWrite(0, 0)
             print "d"
-        elif MobileX > 0 and MobileY > 0:
+        elif MobileX > 1 or MobileY > 1:
             RPL.servoWrite(0, 1600)    # backwards
             RPL.servoWrite(1, 1400)
             print "e"
