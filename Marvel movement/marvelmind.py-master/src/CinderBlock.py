@@ -33,6 +33,9 @@ def DT_PWM_Speedrange():
 
 
 while True:
+    if RPL.analogRead(7) > 500:         			 # drive in reverse
+        RPL.servoWrite(0, 2000)
+        RPL.servoWrite(1, 2000)
     if RPL.analogRead(3) < 600 or RPL.analogRead(5) < 600:      # turns right if a wall or object on the left side is detected
         RPL.servoWrite(0, 1450)
         RPL.servoWrite(1, 2000)
@@ -48,8 +51,5 @@ while True:
     if RPL.analogRead(1) > RPL.analogRead(2) + 50:                 # turn left if sensor reads the ground
         RPL.servoWrite(0, 1000)
         RPL.servoWrite(1, 1550)
-    if RPL.analogRead(7) > 500 and RPL.analogRead(8) > 500:         # drive in reverse
-        RPL.servoWrite(0, 1600)
-        RPL.servoWrite(1, 1400)
     if RPL.analogRead(3) < 300 and RPL.analogRead(4) < 300:
         break
