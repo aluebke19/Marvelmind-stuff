@@ -43,19 +43,19 @@ def navigation():
     while True:
         MobileX = hedge.position()[1]
         MobileY = hedge.position()[2]
-        if RPL.analogRead(1) > 200:  # front left sensor tank turn
-            RPL.servoWrite(0, 2000)
-            RPL.servoWrite(1, 1000)
-            print "1"
-        elif RPL.analogRead(2) > 200:  # front right sensor tank turn
+        if RPL.analogRead(1) > 200 and analogRead(2) < 200:  # front left sensor tank turn
             RPL.servoWrite(0, 1000)
             RPL.servoWrite(1, 2000)
+            print "1"
+        elif RPL.analogRead(2) > 200 and analogRead(1) < 200:  #  tank turn left
+            RPL.servoWrite(0, 2000)
+            RPL.servoWrite(1, 1000)
             print "2"
-	elif RPL.analogRead(3) > 200:  # front left sensor bank turn
+	elif RPL.analogRead(3) > 200:  #  bank turn right
             RPL.servoWrite(0, 1450)
             RPL.servoWrite(1, 1000)
 	    print "3"
-        elif RPL.analogRead(4) > 200:  # front right sensor bank turn
+        elif RPL.analogRead(4) > 200:  #  bank turn left
             RPL.servoWrite(0, 1000)
             RPL.servoWrite(1, 1450)
             print "4"
