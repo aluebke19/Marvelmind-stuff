@@ -43,33 +43,41 @@ def navigation():
     while True:
         MobileX = hedge.position()[1]
         MobileY = hedge.position()[2]
-        if RPL.analogRead(1) > 200 or RPL.analogRead(3) > 200:  # front left
-            RPL.servoWrite(0, 1450)
-            RPL.servoWrite(1, 2000)
+        if RPL.analogRead(1) > 200:  # front left sensor tank turn
+            RPL.servoWrite(0, 2000)
+            RPL.servoWrite(1, 1000)
             print "1"
-        elif RPL.analogRead(2) > 200 or RPL.analogRead(4) > 200:  # front right
+        elif RPL.analogRead(2) > 200:  # front right sensor tank turn
             RPL.servoWrite(0, 1000)
-            RPL.servoWrite(1, 1550)
-            print "2"
-        elif 0 > MobileX and 0 > MobileY:
-            RPL.servoWrite(0, 1000)  # drive straight
             RPL.servoWrite(1, 2000)
+            print "2"
+	elif RPL.analogRead(3) > 200:  # front left sensor bank turn
+            RPL.servoWrite(0, 1450)
+            RPL.servoWrite(1, 1000)
+	    print "3"
+        elif RPL.analogRead(4) > 200:  # front right sensor bank turn
+            RPL.servoWrite(0, 1000)
+            RPL.servoWrite(1, 1450)
+            print "4"
+        elif 0 > MobileX and 0 > MobileY:
+            RPL.servoWrite(0, 1000)  	# drive straight
+            RPL.servoWrite(1, 1000)
             print "a"
         elif MobileX < 0 and MobileY > 0:
             RPL.servoWrite(0, 1450)  # turn right
-            RPL.servoWrite(1, 2000)
+            RPL.servoWrite(1, 1000)
             print "b"
         elif MobileX > 0 and MobileY < 0:
             RPL.servoWrite(0, 1000)    # turn left
-            RPL.servoWrite(1, 1550)
+            RPL.servoWrite(1, 1450)
             print "c"
         elif 1 > MobileX > -1 and 1 > MobileY > -1:
             RPL.servoWrite(0, 0)         # stop
-            RPL.servoWrite(0, 0)
+            RPL.servoWrite(1, 0)
             print "d"
         elif MobileX > 1 or MobileY > 1:
-            RPL.servoWrite(0, 1600)    # backwards
-            RPL.servoWrite(1, 1400)
+            RPL.servoWrite(0, 2000)    # backwards
+            RPL.servoWrite(1, 2000)
             print "e"
         print MobileX
         print MobileY
