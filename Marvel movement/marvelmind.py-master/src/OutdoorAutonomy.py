@@ -6,8 +6,9 @@ import time
 import math
 import sys
 
-order = []
+order = [2, 4, 6, 8, 10, 12, 1, 3, 5, 7, 9, 11]
 t = 1
+waycoord = [[Ax, Ay], [Bx, By]]
 sensor_pin = 5
 RPL.pinMode(sensor_pin,RPL.INPUT)
 def analogRead(pin):
@@ -25,7 +26,7 @@ def driveMath(intposx, intposy, currentx, currenty, wayx, wayy):
     v = wayy - intposy
     u1 = currentx - intposx
     v1 = currenty - intposy
-    turn = (u*v1 - v*u1)
+    return (u*v1 - v*u1)
     #vector maths to see if the turn is up or down
 
 def driveCode(turn):
@@ -35,20 +36,10 @@ def driveCode(turn):
     elif turn < 0:
         RPL.servoWrite(1, 1000)
         RPL.servoWrite(0, 800) #needs to turn left
-
-def textfile():
-    path = "/home/student/OUTDOOR/coordinatelist.txt"
-    with open(path) as f:
-        content = f.readlines()
-
-
-
-# intaking the letter order
-times = int(user_input("Times: "))
-while t <= times:
-    letter = int(user_input("Point %i: ")) % t
-    order.extend(letter)
-    t += 1
+    else:
+        RPL.servoWrite(1, 800)
+        RPL.servoWrite(0, 1000)
+    time.sleep(0.1)
 
 intposx = float(hedge.position()[1]) #initial coordinates
 intposy = float(hedge.position()[2])
@@ -81,25 +72,27 @@ def toPoint():
         currentx = float(hedge.position()[1])
         currenty = float(hedge.position()[2])
 
-        driveMath()
-        driveCode()
-        if dist <= " insert number here ":
+        turn = driveMath(intposx, intposy, currentx, currenty, wayx, wayy)
+        driveCode(turn)
+        if dist <= 10:
             RPL.servoWrite(1, 0)
             RPL.servoWrite(0, 0)
             break
-        else continue
-
+        else:
+            continue
 
 dord = 1
+
 #this is all pseudocode for my brain, i think
 #ideally, this cycles through each element in the list, going to each
 #waypoint as it does so. the text files stuff is still messed up.
-while True:
-    for dord in times:
 
-        set = 2*order[dord] - 1
-        wayx = textfile(set)
-        wayy = textfile(set + 1)
-        toPoint()
-        dord += 1
+for dord in order:
+    set = int(order[dord]) - 1
+    waypoint = waycoord [set]
+    wayx = waypoint[0]
+    wayy = waypoint[1]
+    toPoint()
+
+
     #i need to cycle back to the start of the list if it reaches the end
