@@ -62,20 +62,20 @@ RPL.servoWrite(0, 0)
 def toPoint():
     while True:
         if RPL.analogRead(1) > 200:  # front left
-            RPL.servoWrite(0, 1450)
-            RPL.servoWrite(1, 2000)
+            RPL.servoWrite(0, 2000)
+            RPL.servoWrite(1, 1000)
             print "1"
         elif RPL.analogRead(2) > 200:  # front right
             RPL.servoWrite(0, 1000)
-            RPL.servoWrite(1, 1550)
+            RPL.servoWrite(1, 2000)
             print "2"
         elif RPL.analogRead(3) > 200:   # left side
-            RPL.servoWrite(0, 1450)
-            RPL.servoWrite(1, 2000)
+            RPL.servoWrite(0, 1250)
+            RPL.servoWrite(1, 1000)
             print "3"
         elif RPL.analogRead(4) > 200:   # right side
             RPL.servoWrite(0, 1000)
-            RPL.servoWrite(1, 1550)
+            RPL.servoWrite(1, 1250)
             print "4"
 
         currentx = float(hedge.position()[1])
