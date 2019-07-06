@@ -7,8 +7,7 @@ import math
 import sys
 
 order = [2, 4, 6, 8, 10, 12, 1, 3, 5, 7, 9, 11]
-t = 1
-waycoord = [[Ax, Ay], [Bx, By]]
+waycoord = [[1, 2],[3, 4],[5, 6],[7, 8],[9, 10],[11, 12],[13, 14],[15, 16],[17, 18],[19, 20],[21, 22],[23, 24]]
 sensor_pin = 5
 RPL.pinMode(sensor_pin,RPL.INPUT)
 def analogRead(pin):
@@ -19,6 +18,9 @@ def analogRead(pin):
 hedge = MarvelmindHedge(tty = "/dev/ttyAMC0", adr = None, debug = False)
 hedge.start()
 
+intposx = float(hedge.position()[1]) #initial coordinates
+intposy = float(hedge.position()[2])
+
 def driveMath(intposx, intposy, currentx, currenty, wayx, wayy):
     #gimme fuel gimme fire gimme that which i desire
     dist = math.sqrt((wayx - currentx)**2 + (wayy - currenty)**2)
@@ -27,22 +29,19 @@ def driveMath(intposx, intposy, currentx, currenty, wayx, wayy):
     u1 = currentx - intposx
     v1 = currenty - intposy
     return (u*v1 - v*u1)
-    #vector maths to see if the turn is up or down
+    #vector math to see if the turn is up or down
 
 def driveCode(turn):
     if turn > 0:
-        RPL.servoWrite(1, 800)
+        RPL.servoWrite(1, 1250)
         RPL.servoWrite(0, 1000) #needs to turn right, right motor goes faster
     elif turn < 0:
         RPL.servoWrite(1, 1000)
-        RPL.servoWrite(0, 800) #needs to turn left
+        RPL.servoWrite(0, 1250) #needs to turn left
     else:
-        RPL.servoWrite(1, 800)
+        RPL.servoWrite(1, 1250)
         RPL.servoWrite(0, 1000)
     time.sleep(0.1)
-
-intposx = float(hedge.position()[1]) #initial coordinates
-intposy = float(hedge.position()[2])
 
 RPL.servoWrite(1, 1000)
 RPL.servoWrite(0, 1000)
@@ -74,11 +73,13 @@ def toPoint():
 
         turn = driveMath(intposx, intposy, currentx, currenty, wayx, wayy)
         driveCode(turn)
-        if dist <= 10:
+        if dist <= 0.4:
             RPL.servoWrite(1, 0)
             RPL.servoWrite(0, 0)
+            print "Arrived!"
             break
         else:
+            print "Driving..."
             continue
 
 dord = 1
@@ -89,9 +90,10 @@ dord = 1
 
 for dord in order:
     set = int(order[dord]) - 1
-    waypoint = waycoord [set]
+    waypoint = waycoord[set]
     wayx = waypoint[0]
     wayy = waypoint[1]
+    print "Waypoint found!"
     toPoint()
 
 
